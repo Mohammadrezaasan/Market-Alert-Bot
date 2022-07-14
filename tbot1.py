@@ -1,7 +1,3 @@
-from email import message
-from email.message import Message
-from re import A
-from turtle import title
 import telebot
 bot = telebot.TeleBot("")
 
@@ -12,8 +8,6 @@ def send_welcome(message):
 @bot.message_handler(commands=['help'])
 def send_welcome(message):
 	bot.reply_to(message, '''Popular questions list ?\n''')
-
-
 
 
 

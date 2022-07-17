@@ -1,7 +1,8 @@
 import telebot
 import requests
+from config import Token
 from bs4 import BeautifulSoup
-bot = telebot.TeleBot("")
+bot = telebot.TeleBot(Token)
 api_price_url = "https://api.nobitex.ir/v2/trades/"
 etherscan_url = "https://etherscan.io/tx/"
 @bot.message_handler(commands=['start'])

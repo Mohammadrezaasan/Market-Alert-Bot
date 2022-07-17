@@ -1,7 +1,13 @@
+from markupsafe import Markup
+from rsa import PublicKey
 import telebot
 import requests
+from config import *
 from bs4 import BeautifulSoup
-bot = telebot.TeleBot("")
+from web3 import Web3
+import json
+from decimal import *
+bot = telebot.TeleBot(Token)
 api_price_url = "https://api.nobitex.ir/v2/trades/"
 etherscan_url = "https://etherscan.io/tx/"
 @bot.message_handler(commands=['start'])
@@ -14,7 +20,10 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['Donation'])
 def send_welcome(message):
-	bot.reply_to(message,'''Donation addresses\nUSDT\n(ERC20) 0x2b86081520296021c95577b8ef67463c2875bda6\n(TRC20) TDXNo3ipuVVR8NaQ177HAEqHaeCi6nvdFm\nBTC\n(BTC) 3QRT2gF4jRYcwSnbKpWuQ55hMUoZX9XSLS\nETH\n(ERC20) 0xaf4cc4b431f740fb04325c481af328d7dcd05596\nXRP\n(XRP) rNFugeoj3ZN8Wv6xhuLegUBBPXKCyWLRkB''')
+
+	photo = open("Pictureaddress.jpg",'rb')
+	bot.send_photo(message.chat.id,photo, caption="Donation addresses\nUSDT\n(ERC20) 0x2b86081520296021c95577b8ef67463c2875bda6\n(TRC20) TDXNo3ipuVVR8NaQ177HAEqHaeCi6nvdFm\nBTC\n(BTC) 3QRT2gF4jRYcwSnbKpWuQ55hMUoZX9XSLS\nETH\n(ERC20) 0xaf4cc4b431f740fb04325c481af328d7dcd05596\nXRP\n(XRP) rNFugeoj3ZN8Wv6xhuLegUBBPXKCyWLRkB")
+
 
 @bot.message_handler(commands=['List'])
 def List_of_information1(message):
@@ -71,5 +80,42 @@ def check_transaction(message):
 			print("Transaction failed")
 	else :
 		print(print("status code : ",response.status_code))
+
+@bot.message_handler(commands=['send_eth'])
+def send_eth(message):
+	tmp = message.text.replace("/send_eth ","")
+	tmp = tmp.split()
+	infura_url = Kovan_api
+	web3 = Web3(Web3.HTTPProvider(infura_url))
+	public_key = ""
+	amount = Decimal(tmp[0])
+	to_address = tmp[1]
+	balance = 0
+	private_key = ""
+	if  web3.isConnected() == True:
+		bot.reply_to(message,"web3 connected...\n")
+		balance = web3.eth.getBalance(public_key)
+		gas_fee = 21000*35
+		gas_fee = Decimal(gas_fee)
+		gas_fee = web3.fromWei(gas_fee,'Gwei')
+		balance = web3.fromWei(balance, "ether")
+		if balance > amount :
+			balance = amount-gas_fee
+			nonce = web3.eth.getTransactionCount(public_key)
+			tx = {'nonce':nonce,
+			'to':to_address,
+			'value':web3.toWei(balance,'ether'),
+			'gas':21000,
+			'gasPrice':web3.toWei('35','gwei')
+			}
+			signed_tx = web3.eth.account.signTransaction(tx,private_key)
+			tx_hash= web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+			tx_hash = web3.toHex(tx_hash)
+			tmp = "Transaction success : your tx hash is :\n "+ "https://kovan.etherscan.io/tx/"+tx_hash
+			bot.reply_to(message,tmp)
+		else : 
+			bot.reply_to(message,"Insufficient inventory")
+	else :
+		bot.reply_to(message,"error connecting...")
 
 bot.infinity_polling()

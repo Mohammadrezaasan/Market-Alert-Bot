@@ -10,7 +10,7 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['help'])
 def send_welcome(message):
-	bot.reply_to(message, '''List of information\n !!!  Enter the sentence number to get complete information  !!!\n1-What Is Cryptocurrency?\n2-How does cryptocurrency work?\n3-How to buy cryptocurrency?\n4-How to donate?\n5-Donation addresses\n6-Contact us\n7-live price\n!!!  Contact us for more information  !!!''')
+	bot.reply_to(message, '''List of information\n !!!  Enter the sentence number to get complete information  !!!\n1-What Is Cryptocurrency?\n2-How does cryptocurrency work?\n3-How to buy cryptocurrency?\n4-How to donate?\n5-Donation addresses\n6-Contact us\n7-live price\n8-Check tx_hash\n!!!  Contact us for more information  !!!''')
 
 @bot.message_handler(commands=['Donation'])
 def send_welcome(message):

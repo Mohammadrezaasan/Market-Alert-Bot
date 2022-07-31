@@ -1,5 +1,5 @@
 # market alert bot
-1-check txhash  2-Live cryptocurrency price  3-donation  4-Information about cryptocurrency and crypto
+check txhash  -Live cryptocurrency price  -donation  -Information about cryptocurrency and crypto
 api doc : https://apidocs.nobitex.ir/#orderbook
 
 ## Will be added in the future :

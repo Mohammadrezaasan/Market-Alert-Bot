@@ -191,11 +191,10 @@ def handle_text(message):
         bot.send_message(chat_id,'Guide',reply_markup=markup)
 
 
-    elif 'stockname:' in  message.text.replace(' ','') : 
+    elif 'stock name' in  message.text : 
         try :
-            'stockname:' in  message.text.replace(' ','') 
-            stock_name = message.text.replace('stockname:','')
-            
+            stock_name = message.text.replace('stock name','')
+            stock_name = stock_name.replace(":",'')
             querystring = {"q":stock_name,"hl":"en","gl":"US"}
             headers = {
 	     "X-RapidAPI-Key": "0e8e253caamsh7a1a1074f48f079p1bb0ccjsn9f19ea425e08",
@@ -211,8 +210,8 @@ def handle_text(message):
                 info3 = info2[0]
                 info3 = str(info3)
                 res = ast.literal_eval(info3)
-                stock_name1 = stock_name.replace('stock name : ','')   
-                bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(res['info']['country_code'])+'\n🏢 Full name of the company 🏢 : '+str(res['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(res['price']['currency'])+'\n🌋 '+stock_name1.upper()+" STOCK PRICE 🌋 :💲" + str(res['price']['last']['value'])+"\n⏳ "+stock_name1.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(res['price']['last']['today_change'])+'\n⏳ '+stock_name1.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(res['price']['last']['today_change_percent'])+'%')
+                  
+                bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(res['info']['country_code'])+'\n🏢 Full name of the company 🏢 : '+str(res['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(res['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + str(res['price']['last']['value'])+"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(res['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(res['price']['last']['today_change_percent'])+'%')
         except :
             bot.reply_to(message,'🔴🔴 Make sure your sentence is spelled correctly 🔴🔴')
         
@@ -236,4 +235,3 @@ def handle_text(message):
 bot.polling(none_stop=True)
 
 #The project has been completed ✅
-

@@ -7,10 +7,12 @@
 
 4-Information about cryptocurrency and crypto
 
+5-Live stock market price
+
 api doc : https://apidocs.nobitex.ir/#orderbook
 
 ## Will be added in the future :
-1-Live stock market price
+1-Add Persian version
 
 ## how to make config file :
 first you need create a config.py file then write :

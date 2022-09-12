@@ -168,7 +168,7 @@ def handle_text(message):
             stock_name = stock_name.replace(":",'')
             querystring = {"q":stock_name,"hl":"en","gl":"US"}
             headers = {
-	     "X-RapidAPI-Key": "0e8e253caamsh7a1a1074f48f079p1bb0ccjsn9f19ea425e08",
+	     "X-RapidAPI-Key": "Token",
 	     "X-RapidAPI-Host": "google-finance4.p.rapidapi.com"
         }
             response = requests.request("GET", stock_market_url, headers=headers, params=querystring)

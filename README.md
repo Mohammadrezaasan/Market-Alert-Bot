@@ -2,9 +2,9 @@
 
 
 
-## <p align="center">A simple and convenient robot that tells you the weather with a few clicks <a href="https://t.me/tester_mohammadreza_asan1_bot">Weather Info Bot</a>.</p>
+## <p align="center">A simple bot that with a few clicks you can get the price of any cryptocurrency and any stock in the stock market and you can check if the transaction you made was successful or not. <a href="https://t.me/marketalertrobot">Market Alert Bot</a>.</p>
 
-## <p align="center">Bot API Source : <a href="https://www.weatherapi.com/">Weather Api</a>
+## <p align="center">Bot API Source : <a href="https://nobitex.ir/">Nobitex Exchange</a> & <a href="https://www.google.com/finance/?hl=en">Google Finance</a>
 
 ## Contents
 
@@ -43,7 +43,8 @@ bot = telebot.TeleBot(Token_bot)
 @bot.message_handler(commands=['start']) # Here we set the message handler = start { For when message handler = start, the function does the following }
 def handle_start(message): 
    chat_id = message.chat.id 
-   text="`"+"The name of the desired city : "+"`" # Here we used the Telegram feature for text format { With this method, the user just clicks on the text and copies it to her clipboard, making the user's work faster. }
+   text="`"+"The name of the desired city : "+"`" # Here we used the Telegram feature for text format { With this method, the user just clicks on the text and copies it to her clipboard, making the user's work faster. }![nobitex-l](https://user-images.githubusercontent.com/108104864/189927489-b83ac69d-0471-4cc7-b2d7-d1c69f27556f.png)
+
    markup = telebot.types.ReplyKeyboardMarkup(True, False) # In this section, we prepare a variable for the buttons, which will send the text inside the button only by clicking on it.
    markup.row("🔴 First, enter the name of your desired city as in the example below 🔴")
    markup.row('The name of the desired city : London')

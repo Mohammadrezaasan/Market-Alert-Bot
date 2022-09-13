@@ -29,9 +29,9 @@
 bot = telebot.TeleBot(Token_bot)
 ```
  ## Next step
- * To get the information you need, you must apply to the source site to receive the information you need after the request { Currently, I am using the prepared and edited source of <a href="https://rapidapi.com/weatherapi/api/weatherapi-com/">Rapid Api</a> site because you waste less time and it makes your work faster. }
+ * To get the information you need, you must apply to the source site to receive the information you need after the request { Currently, I am using the prepared and edited source of <a href="https://rapidapi.com/Glavier/api/google-finance4/">Rapid Api</a> site because you waste less time and it makes your work faster. }
  ```
- url = "https://weatherapi-com.p.rapidapi.com/forecast.json"
+ url = "https://google-finance4.p.rapidapi.com/search/"
 ```
   
 ## Codes docs

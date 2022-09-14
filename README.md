@@ -1,11 +1,3 @@
-
-
-https://user-images.githubusercontent.com/108104864/190086229-9091d470-27ff-409f-8e33-41ccd8bd2849.MOV
-
-
-
-https://user-images.githubusercontent.com/108104864/190086349-34e660c7-dd47-44a6-921e-b79b3f8641ad.MOV
-
 ![D6437C96-6E84-4179-AB76-CBBA557A3146](https://user-images.githubusercontent.com/108104864/189918473-367d4289-7609-49d9-829d-c38750d40980.jpeg)
 
 
@@ -209,18 +201,17 @@ elif message.text == 'irt currency 🇮🇷' :
  
  ## How does the bot respond to keywords?
  
- |<p align="center"><video src="https://user-images.githubusercontent.com/108104864/188339284-0438f705-3890-4321-bcb2-f0af97978fb6.MOV" width="250" height="500"/>|
+ |<p align="center"><video src="https://user-images.githubusercontent.com/108104864/190086229-9091d470-27ff-409f-8e33-41ccd8bd2849.MOV" width="250" height="500"/><p align="center"><video src="https://user-images.githubusercontent.com/108104864/190086349-34e660c7-dd47-44a6-921e-b79b3f8641ad.MOV" width="250" height="500"/>|
 |:---:|
 |!!Keywords used in the video!!|
-|🤖 Introducing The Robot 🤖|This key will help you get to know the bot and understand what it can do.|
-|📓 Click here to open the list of keywords for you 📓|You can use this key to open the keyword list.|
-|🗂 if you need more information 🗂,📨 contact us 📨|This key shows you the ways to communicate with us 📡.|
-|💸 donation 💸|With the help of this key, a list of available currencies for donation will be opened, and by clicking on the desired currency, you will receive its address and QR code.|
-|💵 Cryptocurrency price 💵|By clicking on this button, a list will open for you in which two options will be displayed for you, you can choose one according to your desired currency and then click on the desired option from the two options. Choose one. Click on the currency you want and a list of available currencies will open for you to request a price. Click on any of them and you will get the price of the currency you want.|
-|📊 Stock Market price 📊|With the help of this key, you can get the current price of any stock with a few simple clicks.|
-|👨🏻‍💻 tx_hash check(ERC20) 👨🏻‍💻|By using this key and following the instructions, you can enter your address and check it and make sure that the operation is done correctly.|
-|📒 List of information 📒|When you click on this button, a list of information will open for you, and you will get the answer to your question by clicking on the question you want.|
- 
+|🤖 Introducing The Robot 🤖|
+|📓 Click here to open the list of keywords for you |
+|🗂 if you need more information 🗂,📨 contact us 📨|
+|💸 donation 💸|
+|💵 Cryptocurrency price 💵|
+|📊 Stock Market price 📊|
+|👨🏻‍💻 tx_hash check(ERC20) 👨🏻‍💻|
+|📒 List of information 📒 |
  
  
  

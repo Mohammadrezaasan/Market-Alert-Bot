@@ -38,208 +38,180 @@ bot = telebot.TeleBot(Bot_Token)
 
 
 
-* The following code is related to the beginning part
+* The following code is related to the important parts
 ```
-@bot.message_handler(commands=['start']) # Here we set the message handler = start { For when message handler = start, the function does the following }
-def handle_start(message): 
-   chat_id = message.chat.id 
-   text="`"+"The name of the desired city : "+"`" # Here we used the Telegram feature for text format { With this method, the user just clicks on the text and copies it to her clipboard, making the user's work faster. }![nobitex-l](https://user-images.githubusercontent.com/108104864/189927489-b83ac69d-0471-4cc7-b2d7-d1c69f27556f.png)
+elif message.text == 'irt currency 🇮🇷' : 
+        text_1 = "`"+"Enter the name of the desired cryptocurrency : "+"`"
+        global currency_type
+        currency_type = message.text # In this section, we save the type of currency he/she has chosen {to specify whether the price (for example, BTC) is in dollars or Iranian Tomans}
 
-   markup = telebot.types.ReplyKeyboardMarkup(True, False) # In this section, we prepare a variable for the buttons, which will send the text inside the button only by clicking on it.
-   markup.row("🔴 First, enter the name of your desired city as in the example below 🔴")
-   markup.row('The name of the desired city : London')
-   bot.send_message(chat_id,'Hello 🙋🏻‍♂️\nwelcome to the Weather Info Bot 👾 '+'\n🔴🔴 IMPORTANT 🔴🔴\nTo enter the name of your desired city, click on the text below and add the name of your desired city to the end of the text.',reply_markup=markup) # In this section, you enter the desired texts, which will be sent as text along with the button page
-   bot.send_message(chat_id,text,parse_mode='MarkdownV2')
+        chat_id = message.chat.id
+        markup = telebot.types.ReplyKeyboardMarkup(True, False)
+        markup.row('🔴🔴 To do the steps correctly, pay attention to the example below 🔴🔴')
+        markup.row('Click here to get the USDT/IRT price')
+        markup.row('Enter the name of the desired cryptocurrency : BTC')
+        markup.row('Return to main page ↩️','Return to the previous page 🔙')
+        bot.send_message(chat_id,'🔴🔴 Important 🔴🔴\n To enter the name of your desired cryptocurrency, click on the text below and add the name of your desired cryptocurrency to the end of the text.', reply_markup=markup )
+        bot.send_message(chat_id,text_1,parse_mode='MarkdownV2')
+   
+    elif message.text == 'usdt currency 🇺🇸' : 
+        currency_type = message.text
+        text_2 = "`"+"Enter the name of the desired cryptocurrency : "+"`"
+        chat_id = message.chat.id
+        markup = telebot.types.ReplyKeyboardMarkup(True, False)
+        markup.row('🔴🔴 To do the steps correctly, pay attention to the example below 🔴🔴')
+        markup.row('Enter the name of the desired cryptocurrency : BTC')
+        markup.row('Return to main page ↩️','Return to the previous page 🔙')
+        bot.send_message(chat_id,'🔴🔴 Important 🔴🔴\n To enter the name of your desired cryptocurrency, click on the text below and add the name of your desired cryptocurrency to the end of the text.', reply_markup=markup )
+        bot.send_message(chat_id,text_2,parse_mode='MarkdownV2')
 ```
  
- * The code below is for the important part after the start part
+ * The following code is a continuation of the above code
  ```
- @bot.message_handler(content_types=['text']) # We put the message handler = content_types=['text'] here { If the user enters any text, our function will be activated and after activation, it will check the conditions that we have written in the form of try, if, and elif inside that function to see if the text entered by the user matches our conditions. or not? , if it matches, it fulfills that condition. }
-def handle_text(message):
-    message.text = message.text.lower() # In this section, we convert all the messages entered by the user into lowercase letters so that they don't have problems, and we write our codes according to the standard.
- ```
- * The following code is used to get the city name from the user 
- ```
-     if  'the name of the desired city' in message.text :
-        try:
-
-            global city_name
-            city_name = message.text.replace('the name of the desired city','')
-            city_name =  city_name.replace(":","") # In this section, using the city name variable, we set the city name entered by the user = city name variable.
-            city_name_test = city_name.replace(" ","")
-            city_name_test = city_name_test[0] , city_name_test[1]
-            if city_name_test[0]  not in Alphabet : # In this section, we check that the first two letters of the city name match the English alphabet and that the city name is not smaller than two letters.
-                bot.reply_to(message,"The city name was not registered successfully ❌")
-           
-            elif city_name_test[1] not in Alphabet : 
-                bot.reply_to(message,"The city name was not registered successfully ❌")
-
-            elif city_name_test[0] in Alphabet : # In this section, we also check that if the first letter of the city name is in the English alphabet, save the city name and go to the next step.
-                chat_id = message.chat.id 
-                markup = telebot.types.ReplyKeyboardMarkup(True, False)
-                markup.row("🤖 Introducing The Robot 🤖")
-                markup.row('🗝 click here to find out what each keyword does 🗝')
-                markup.row('📓 click here to open the list of keywords for you 📓')
-                markup.row('🔄 Changing the name of the city 🔄')
-                bot.send_message(chat_id,"The city name was successfully registered ✅\nCity Name :"+city_name.title(),reply_markup=markup)
-        except: 
-            bot.reply_to(message,"The city name was not registered successfully ❌")
- ```
- 
- * The following code is used to get the current weather condition 
- ```
- elif message.text == "🌦 click here to get current weather conditions 🌦" :
+ elif 'enter the name of the desired cryptocurrency' in  message.text : 
         try :
-            querystring = {"q":city_name,"days":"3"} # In this section, the city name was entered by the user in the city name field, we saved it as a value in the city name variable and placed it as the city name.
-
+	    # Get currency name
+            stock_name = message.text.replace('enter the name of the desired cryptocurrency','')
+            stock_name = stock_name.replace(":",'')
+            querystring = {"q":stock_name,"hl":"en","gl":"US"}
             headers = {
 	     "X-RapidAPI-Key": RapidAPI_Key,
-	     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
-         }
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            information_received = json.loads(response.text) # And in this part, we sort the information we obtained after the request with the help of json
-            current = information_received["current"]
-            location = information_received["location"]
-            condition = current['condition']
-    
-            # In this section, we edit the information we have obtained  
-            bot.reply_to(message,'Country Name 🌎 : '+location['country']+'\nRegion 🗺 : '+location['region']+'\nCity Name 🏙 : '+location['name']+"\n------------------------------------------------------"+'\nLocal Time ⌚️ : '+location['localtime'].split()[1]+'\nCalendar 🗓 : '+location['localtime'].split()[0]+'\nLatest update on local time ⌚️ : '+current['last_updated'].split()[1]+"\nIt’s "+condition['text']+' Now'+sticker[condition['text']]+'\nTemperature 🌡 : '+str(current['temp_c'])+'°C'+'\nFeels Like 🚻 : '+str(current['feelslike_c'])+'°C'+'\nTemperature 🌡 : '+str(current['temp_f'])+'°F'+'\nFeels Like 🚻 : '+str(current['feelslike_f'])+'°F'+'\nWind Speed According To The Latest Update 🌬 : '+str(current['wind_kph'])+'KPH'+'\nWind Speed According To The Latest Update 🌬 : '+str(current['wind_mph'])+'MPH'+'\nWind Direction 🧭 : '+str(current['wind_dir'])+'\nPressure In Inches 🛫 : '+str(current['pressure_in'])+'\nPrecipitation Amount 🌧 : '+str(current['precip_mm'])+'MM'+'\nPrecipitation Amount 🌧 : '+str(current['precip_in'])+' Inches'+'\nHumidity💧: '+str(current['humidity'])+'%'+'\nCloud Cover ☁️ : '+str(current['cloud'])+'%'+'\nVisibility 🛣 : '+str(current['vis_km'])+'KM'+'\nVisibility 🛣 : '+str(current['vis_miles'])+'MPH'+'\nUV ☀️🕶 : '+str(current['uv']))                                                                                                                                                                
-        except : 
-            bot.reply_to(message,'🔴🔴 Make sure the city name you entered is correct 🔴🔴')
-   
- ```
-* The following code is used to get the local time and date of the location you entered
-```
- elif message.text == '⌚️🌎 click here to get the local time of your desired location ⌚️🌎' :  
-        try :
-    
-            querystring = {"q":city_name,"days":"3"}
-
-            headers = {
-         "X-RapidAPI-Key": RapidAPI_Key,
-         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
-         }
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            information_received = json.loads(response.text)
-            current = information_received["current"]
-            location = information_received["location"]
-            condition = current['condition']
-        
-                
-
-            bot.reply_to(message,'Country Name 🌎 : '+location['country']+'\nRegion 🗺 : '+location['region']+'\nCity Name 🏙 : '+location['name']+"\nLocal Time ⌚️ : "+location['localtime'].split()[1]+'\nCalendar 🗓 : '+location['localtime'].split()[0]+"\nIt’s "+condition['text']+' Now'+sticker[condition['text']])
-        except : 
-            bot.reply_to(message,'🔴🔴 Make sure the city name you entered is correct 🔴🔴')
-
- ```
- * The following code is used to get the daily forecast
- ```
- elif message.text in select_day_for_daily_forecast : # In this section, we want to use the variables that we created in the config file { Here we use the keywords that we have prepared and the user enters them to determine the forecast day and we translate them using the dictionary method }
-        global answer_choose_the_day_of_the_daily_forecast 
-        answer_choose_the_day_of_the_daily_forecast = message.text 
-        try :
-            querystring = {"q":city_name,"days":"3"}
-
-            headers = {
-         "X-RapidAPI-Key": RapidAPI_Key,
-         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
+	     "X-RapidAPI-Host": "google-finance4.p.rapidapi.com"
         }
+            response = requests.request("GET", stock_market_url, headers=headers, params=querystring)
+	    # In this section, we edit the information received from the source
+	    Bot_Market_Info = response.text
+            Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+            Bot_Market_Info = list(Bot_Market_Info)
+            Bot_Market_info_Edit = json.loads(response.text)
+            Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+            Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+            Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+            crypto_check = str(Bot_Market_info_Edit_3['price']['currency'])
 
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            information_received = json.loads(response.text)
-            location = information_received["location"]
-            forecast = information_received['forecast']["forecastday"][select_day_for_daily_forecast[answer_choose_the_day_of_the_daily_forecast]]['day']
-            condition = forecast['condition']
-            date1 = information_received['forecast']["forecastday"][select_day_for_daily_forecast[answer_choose_the_day_of_the_daily_forecast]]
+            if  currency_type == 'irt currency 🇮🇷' : 
+                if crypto_check == "None" : 
+                    try :
+                        Bot_Market_Info = response.text
+                        Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+                        Bot_Market_Info = list(Bot_Market_Info)
+                        Bot_Market_info_Edit = json.loads(response.text)
+                        Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+                        Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+                        Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+                        crypto_price = str(Bot_Market_info_Edit_3['price']['last']['value'])
+                        change_irt = str(Bot_Market_info_Edit_3['price']['last']['today_change'])
+                        response = requests.get(api_price_url+"USDTIRT")
+                        response = response.json()
+                        tmp =  response['trades'][0]['price'] 
+                        tmp = str(tmp).replace("'",'')
+                        tmp = str(tmp).strip("( )").replace(",",'')
+                        tmp = tmp.replace(""," ")
+                        tmp = tmp.split()
+                        tmp.pop(-1)
+                        tmp = str(tmp)
+                        tmp = tmp.replace("'",'')
+                        tmp = tmp.replace(",","")
+                        tmp = tmp.strip("[ ]")
+                        tmp = tmp.replace(" ",'')
+                        crypto_price = float(crypto_price)
+                        tmp = float(tmp)
+                        change_irt = float(change_irt)
+                        change_irt_fi = change_irt * tmp
+                        crypto_price_all = tmp * crypto_price
+                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" PRICE 🌋 : " + str(crypto_price_all) +" 🇮🇷"+"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ : " + str(change_irt_fi)+" 🇮🇷"+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')
+                    except : 
+                       bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
+                else: 
+                    bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
+            elif  currency_type == 'usdt currency 🇺🇸' :   
+                if crypto_check == "None" : 
+                    try:
                         
+                        Bot_Market_Info = response.text
+                        Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+                        Bot_Market_Info = list(Bot_Market_Info)
+                        Bot_Market_info_Edit = json.loads(response.text)
+                        Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+                        Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+                        Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+                        crypto_price = str(Bot_Market_info_Edit_3['price']['last']['value'])
+                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+"  PRICE 🌋 :💲" + crypto_price +"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ :💲" + str(Bot_Market_info_Edit_3['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')      
+                    except : 
+                        bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
+                else :
+                    bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
 
-            bot.reply_to(message,'Country Name 🌎 : '+location['country']+'\nRegion 🗺 : '+location['region']+'\nCity Name 🏙 : '+location['name']+"\n------------------------------------------------------"+'\nForecast Date 🗓 : '+str(date1['date'])+'\n'+condition['text']+' '+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+' '+sticker[condition['text']]+"\n"+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+"'s Maximum Temperature 🌡 : "+str(forecast['maxtemp_c'])+'°C'+"\n"+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+"'s Minimum Temperature 🌡 : "+str(forecast['mintemp_c'])+'°C'+"\n"+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+"'s Average Temperature 🌡 : "+str(forecast['avgtemp_c'])+"°C"+"\n"+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+"'s Maximum Temperature 🌡 : "+str(forecast['maxtemp_f'])+'°F'+"\n"+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+"'s Minimum Temperature 🌡 : "+str(forecast['mintemp_f'])+'°F'+"\n"+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+"'s Average Temperature 🌡 : "+str(forecast['avgtemp_f'])+'°F'+'\nMaximum Wind Speed 🌬 : '+str(forecast['maxwind_kph'])+'KPH'+'\nMaximum Wind Speed 🌬 : '+str(forecast['maxwind_mph'])+'MPH'+'\nAverage Visibility 🛣 : '+str(forecast['avgvis_km'])+'KM'+'\nAverage Visibility 🛣 : '+str(forecast['avgvis_miles'])+'MPH'+'\nAverage Humidity 💧 : '+str(forecast['avghumidity'])+'%'+"\nWill It Rain "+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+' 🌧 : '+yes_or_no[str(forecast["daily_will_it_rain"])]+'\nChance Of Rain '+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+' 🌧 : '+str(forecast['daily_chance_of_rain'])+'%'+"\nWill It Snow "+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+' 🌨 : '+yes_or_no[str(forecast["daily_will_it_snow"])]+'\nChance Of Snow '+the_name_of_each_day[answer_choose_the_day_of_the_daily_forecast]+' 🌨 : '+str(forecast['daily_chance_of_snow'])+'%'+'\nTotal Precipitation 🌧 : '+str(forecast['totalprecip_mm'])+'MM'+'\nTotal Precipitation 🌧 : '+str(forecast['totalprecip_in'])+'Inches')                                                        
-        except : 
-            bot.reply_to(message,'🔴🔴 Make sure the city name you entered is correct 🔴🔴')
- ```
- * The following code is for setting the hourly forecast day and displaying the list of forecast hours
- ```
-     elif message.text in select_day_for_hourly_forecast : 
-        global hour4
-        hour4 = message.text
-        chat_id = message.chat.id 
-        markup = telebot.types.ReplyKeyboardMarkup(True,False)
-        markup.row('00:00','01:00','02:00','03:00')
-        markup.row('04:00','05:00','06:00','07:00')
-        markup.row('08:00','09:00','10:00','11:00')
-        markup.row('12:00','13:00','14:00','15:00')
-        markup.row('16:00','17:00','18:00','19:00')
-        markup.row('20:00','21:00','22:00','23:00')
-        markup.row('Return to main page ↩️','Return to the hourly daily forecast page 🔙')
-        bot.send_message(chat_id,'‼️ Select one of the following hours and you will receive the weather forecast for that hour according to the selected time frame ‼️',reply_markup=markup)
-      
- ```
- 
- * The following code is used to get the hourly forecast
- ```
-     elif message.text in choose_an_hour : 
+        except :
+             bot.reply_to(message,'🔴🔴 Make sure your sentence is spelled correctly 🔴🔴')
+        
+    elif message.text == "click here to get the usdt/irt price" : 
         try :
-
-            hour2 = message.text
-            
-            querystring = {"q":city_name,"days":"3"}
-
-            headers = {
-         "X-RapidAPI-Key": RapidAPI_Key,
-         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
-        }
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-
-            information_received = json.loads(response.text)
-            location = information_received["location"]
-            forecast = information_received['forecast']["forecastday"][select_day_for_hourly_forecast[hour4]]['hour'][choose_an_hour[hour2]]
-            condition = forecast['condition']
-            location = information_received["location"]
-            date1 = information_received['forecast']["forecastday"][select_day_for_hourly_forecast[hour4]]            
-
-            bot.reply_to(message,'Country Name 🌎 : '+location['country']+'\nRegion 🗺 : '+location['region']+'\nCity Name 🏙 : '+location['name']+"\n------------------------------------------------------"+'\nForecast Date 🗓 : '+str(date1['date'])+'\n'+condition['text']+' At '+hour2+' '+sticker[condition['text']]+"\nTemperature 🌡 : "+str(forecast['temp_c'])+"°C"+"\nFeels Like 🚻 : "+str(forecast['feelslike_c'])+"°C"+"\nThe Heat We Feel ♨️ : "+str(forecast['heatindex_c'])+'°C'+"\nTemperature 🌡 : "+str(forecast['temp_f'])+"°F"+"\nFeels Like 🚻 : "+str(forecast['feelslike_f'])+"°F"+"\nThe Heat We Feel ♨️ : "+str(forecast['heatindex_f'])+'°F'+"\nWind Speed At "+hour2+" 🌬 : "+str(forecast['wind_kph'])+"KPH"+"\nWind Speed At "+hour2+" 🌬 : "+str(forecast['wind_mph'])+"MPH"+"\nWind Temperature 🌡 : "+str(forecast['windchill_c'])+'°C'+"\nWind Temperature 🌡: "+str(forecast['windchill_f'])+'°F'+"\nWind Direction 🧭 : "+str(forecast["wind_dir"])+"\nPressure In Inches 🛫 : "+str(forecast["pressure_in"])+"\nWill It Rain "+the_name_of_each_day_2[hour4]+' At '+hour2+' 🌧 : '+yes_or_no[str(forecast["will_it_rain"])]+'\nChance Of Rain '+the_name_of_each_day_2[hour4]+' At '+hour2+' 🌧 : '+str(forecast['chance_of_rain'])+'%'+"\nPrecipitation Amount 🌧 : "+str(forecast['precip_mm'])+"MM"+"\nPrecipitation Amount 🌧 : "+str(forecast['precip_in'])+"Inches"+"\nWill It Snow "+the_name_of_each_day_2[hour4]+" At "+hour2+' 🌨 : '+yes_or_no[str(forecast["will_it_snow"])]+'\nChance Of Snow '+the_name_of_each_day_2[hour4]+' At '+hour2+' 🌨 : '+str(forecast['chance_of_snow'])+'%')                                                                                                                                                                
+            response = requests.get(api_price_url+"USDTIRT")
+            response = response.json()
+            tmp =  response['trades'][0]['price'] 
+            tmp = str(tmp).replace("'",'')
+            tmp = str(tmp).strip("( )").replace(",",'')
+            tmp = tmp.replace(""," ")
+            tmp = tmp.split()
+            tmp.pop(-1)
+            tmp = str(tmp)
+            tmp = tmp.replace("'",'')
+            tmp = tmp.replace(",","")
+            tmp = tmp.strip("[ ]")
+            tmp = tmp.replace(" ",'')
+            bot.reply_to(message,"🇮🇷 "+"USDT/IRT PRICE : "+tmp+" 🇮🇷")
         except : 
-            bot.reply_to(message,'🔴🔴 Make sure the city name you entered is correct 🔴🔴')
+            bot.reply_to(message,'Server Error...')
  ```
- * <a href="https://github.com/Mohammadrezaasan/Weather-Info-Bot/blob/main/Main.py">Click here to get the full code</a>
+ * Check the transaction hash
+ ```
+ elif 'tx hash' in message.text : 
+        tx_hash = message.text.replace('tx hash ','')
+        tx_hash = tx_hash.replace(":","")
+        response = requests.post(etherscan_url+tx_hash,headers= {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'})
+        if response.status_code == 200 : 
+            soup = BeautifulSoup(response.text , 'html.parser')
+            status_result = str(soup.find_all("span", {"class": "u-label u-label--sm u-label--value u-label--success rounded"})).count("Success")
+            if status_result == 1 : 
+                bot.reply_to(message,('Transaction success ✅'))
+            else :
+                bot.reply_to(message,("Transaction failed ❌"))
+        else :
+            bot.reply_to(message,("status code : ",response.status_code))
  
- * <a href="https://github.com/Mohammadrezaasan/Weather-Info-Bot/blob/main/weather_info_config.py">Click here to get the config file</a>
+ ```
+ 
+ * <a href="https://github.com/Mohammadrezaasan/Market-Alert-Bot/blob/main/Main.py">Click here to get the full code</a>
+ 
+ * <a href="https://github.com/Mohammadrezaasan/Market-Alert-Bot/blob/main/config.py">Click here to get the config file</a>
+ 
  ## Keyword guide
 	
 |Keyword names|What can they do?|
 |:---:|------|
-|The name of the desired city :|Saves the desired city name.|
 |🤖 Introducing The Robot 🤖|This key will help you get to know the bot and understand what it can do.|
 |📓 Click here to open the list of keywords for you 📓|You can use this key to open the keyword list.|
-|🔄 Changing the name of the city 🔄|Using this key, you can change the name of the city you want.|
-|🌦 Click here to get current weather conditions 🌦|You can use this key to get the current weather condition.|
-|😎 click here to get the weather forecast 😎|Using this key, a list of keywords will be opened for you, using which you can get the weather forecast.|
-|⏳ Daily Forecast ⏳|Using this key, a list of keywords will be opened for you, with which you can set the weather forecast for the day you want.|
-|🕥 Hourly Daily Forecast 🕥|Using this key, a list of keywords will be opened for you. First, you specify the forecast day and then the list of hours will open for you to enter any hour that is in the list. You will get the weather conditions for the hour you entered.|
-|🌌 Day And Night Times 🌄For Example[ sunrise : 5:55 ]|You can use this key to get information such as Sunrise, Sunset,Moonrise, Moonset, Moon phases, Moonlight.|
-|⌚️🌎 Click here to get the local time of your desired location ⌚️🌎|You can use this key to get the local time of any city and any country|
-
+|🗂 if you need more information 🗂,📨 contact us 📨|This key shows you the ways to communicate with us 📡.|
+|💸 donation 💸|With the help of this key, a list of available currencies for donation will be opened, and by clicking on the desired currency, you will receive its address and QR code.|
+|💵 Cryptocurrency price 💵|By clicking on this button, a list will open for you in which two options will be displayed for you, you can choose one according to your desired currency and then click on the desired option from the two options. Choose one. Click on the currency you want and a list of available currencies will open for you to request a price. Click on any of them and you will get the price of the currency you want.|
+|📊 Stock Market price 📊|With the help of this key, you can get the current price of any stock with a few simple clicks.|
+|👨🏻‍💻 tx_hash check(ERC20) 👨🏻‍💻|By using this key and following the instructions, you can enter your address and check it and make sure that the operation is done correctly.|
+|📒 List of information 📒|When you click on this button, a list of information will open for you, and you will get the answer to your question by clicking on the question you want.|
+ 
  ## How does the bot respond to keywords?
+ 
  |<p align="center"><video src="https://user-images.githubusercontent.com/108104864/188339284-0438f705-3890-4321-bcb2-f0af97978fb6.MOV" width="250" height="500"/>|
 |:---:|
 |!!Keywords used in the video!!|
-|The name of the desired city :|Saves the desired city name.|
 |🤖 Introducing The Robot 🤖|This key will help you get to know the bot and understand what it can do.|
 |📓 Click here to open the list of keywords for you 📓|You can use this key to open the keyword list.|
-|🔄 Changing the name of the city 🔄|Using this key, you can change the name of the city you want.|
-|🌦 Click here to get current weather conditions 🌦|You can use this key to get the current weather condition.|
-|😎 click here to get the weather forecast 😎|Using this key, a list of keywords will be opened for you, using which you can get the weather forecast.|
-|⏳ Daily Forecast ⏳|Using this key, a list of keywords will be opened for you, with which you can set the weather forecast for the day you want.|
-|🕥 Hourly Daily Forecast 🕥|Using this key, a list of keywords will be opened for you. First, you specify the forecast day and then the list of hours will open for you to enter any hour that is in the list. You will get the weather conditions for the hour you entered.|
-|🌌 Day And Night Times 🌄For Example[ sunrise : 5:55 ]|You can use this key to get information such as Sunrise, Sunset,Moonrise, Moonset, Moon phases, Moonlight.|
-|⌚️🌎 Click here to get the local time of your desired location ⌚️🌎|You can use this key to get the local time of any city and any country|
-
+|🗂 if you need more information 🗂,📨 contact us 📨|This key shows you the ways to communicate with us 📡.|
+|💸 donation 💸|With the help of this key, a list of available currencies for donation will be opened, and by clicking on the desired currency, you will receive its address and QR code.|
+|💵 Cryptocurrency price 💵|By clicking on this button, a list will open for you in which two options will be displayed for you, you can choose one according to your desired currency and then click on the desired option from the two options. Choose one. Click on the currency you want and a list of available currencies will open for you to request a price. Click on any of them and you will get the price of the currency you want.|
+|📊 Stock Market price 📊|With the help of this key, you can get the current price of any stock with a few simple clicks.|
+|👨🏻‍💻 tx_hash check(ERC20) 👨🏻‍💻|By using this key and following the instructions, you can enter your address and check it and make sure that the operation is done correctly.|
+|📒 List of information 📒|When you click on this button, a list of information will open for you, and you will get the answer to your question by clicking on the question you want.|
  
  
  

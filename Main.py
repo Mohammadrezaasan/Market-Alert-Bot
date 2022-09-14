@@ -33,6 +33,10 @@ def handle_text(message):
     if message.text in Bot_Info:
         bot.reply_to(message,Bot_Info[message.text])
     
+    elif   message.text == '🗝 click here to find out what each keyword does 🗝'  : 
+        bot.send_photo(message.chat.id,open("C:\\Users\\****\\OneDrive\\Desktop\\m1.PNG",'rb'),caption="")
+
+    
     elif message.text == '📓 click here to open the list of keywords for you 📓' : 
         chat_id = message.chat.id 
         markup = telebot.types.ReplyKeyboardMarkup(True, False)
@@ -70,8 +74,7 @@ def handle_text(message):
         d = message.text
         if d in Addresses :
             bot.send_photo(message.chat.id,photos[d],caption=Addresses[d])
-        
-    
+
     elif message.text == '💵 cryptocurrency price 💵' : 
         chat_id = message.chat.id
         markup = telebot.types.ReplyKeyboardMarkup(True, False)

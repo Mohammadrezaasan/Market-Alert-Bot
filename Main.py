@@ -128,23 +128,26 @@ def handle_text(message):
         bot.reply_to(message,crypto_info[message.text])
 
     elif message.text == '👨🏻‍💻 tx_hash check(erc20) 👨🏻‍💻':
+        text_3 = "`"+"Tx Hash : "+"`"
         chat_id = message.chat.id
         markup = telebot.types.ReplyKeyboardMarkup(True,False)
-        markup.row('🔴🔴 Tx_hash Enter Tx_hash here 🔴🔴\nfor example : Tx_hash r5wv5w56bw568n5k85w8m88w67w')
+        markup.row('🔴🔴 To do the steps correctly, pay attention to the example below 🔴🔴')
+        markup.row('Tx Hash : r5wv5w56bw568n5k85w8m88w67w')
         markup.row('Return to main page ↩️','Return to the keywords list page 🔙')
-        bot.send_message(chat_id,'Guide',reply_markup=markup)
+        bot.send_message(chat_id,'🔴🔴 Important 🔴🔴\n Copy the following text to your clipboard and add your Transaction hash at the end', reply_markup=markup )
+        bot.send_message(chat_id,text_3,parse_mode='MarkdownV2')
 
-    elif 'Tx_Hash' in message.text.title() : 
-        tx_hash = message.text.replace('tx_hash ','')
-
+    elif 'tx hash' in message.text : 
+        tx_hash = message.text.replace('tx hash ','')
+        tx_hash = tx_hash.replace(":","")
         response = requests.post(etherscan_url+tx_hash,headers= {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'})
         if response.status_code == 200 : 
             soup = BeautifulSoup(response.text , 'html.parser')
             status_result = str(soup.find_all("span", {"class": "u-label u-label--sm u-label--value u-label--success rounded"})).count("Success")
             if status_result == 1 : 
-                bot.reply_to(message,('Transaction success'))
+                bot.reply_to(message,('Transaction success ✅'))
             else :
-                bot.reply_to(message,("Transaction failed"))
+                bot.reply_to(message,("Transaction failed ❌"))
         else :
             bot.reply_to(message,("status code : ",response.status_code))
     
@@ -168,21 +171,21 @@ def handle_text(message):
             stock_name = stock_name.replace(":",'')
             querystring = {"q":stock_name,"hl":"en","gl":"US"}
             headers = {
-	     "X-RapidAPI-Key": "Token",
+	     "X-RapidAPI-Key": "0e8e253caamsh7a1a1074f48f079p1bb0ccjsn9f19ea425e08",
 	     "X-RapidAPI-Host": "google-finance4.p.rapidapi.com"
         }
             response = requests.request("GET", stock_market_url, headers=headers, params=querystring)
             
             if  response.status_code == 200 :   
-                    info1 = response.text
-                    info1 = str(info1).strip('[]')
-                    info1 = list(info1)
-                    info2 = json.loads(response.text)
-                    info3 = info2[0]
-                    info3 = str(info3)
-                    res = ast.literal_eval(info3)
-                    stock_price = str(res['price']['last']['value'])
-                    bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(res['info']['country_code'])+'\n🏢 Full name of the company 🏢 : '+str(res['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(res['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + stock_price +"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(res['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(res['price']['last']['today_change_percent'])+'%')
+                    Bot_Market_Info = response.text
+                    Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+                    Bot_Market_Info = list(Bot_Market_Info)
+                    Bot_Market_info_Edit = json.loads(response.text)
+                    Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+                    Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+                    Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+                    crypto_price = str(Bot_Market_info_Edit_3['price']['last']['value'])
+                    bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🏢 Full name of the company 🏢 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + crypto_price +"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(Bot_Market_info_Edit_3['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')
         except :
             bot.reply_to(message,'🔴🔴 Make sure your sentence is spelled correctly 🔴🔴')
         
@@ -197,26 +200,27 @@ def handle_text(message):
 	     "X-RapidAPI-Host": "google-finance4.p.rapidapi.com"
         }
             response = requests.request("GET", stock_market_url, headers=headers, params=querystring)
-            info1 = response.text
-            info1 = str(info1).strip('[]')
-            info1 = list(info1)
-            info2 = json.loads(response.text)
-            info3 = info2[0]
-            info3 = str(info3)
-            res = ast.literal_eval(info3)
-            crypto_check = str(res['price']['currency'])
+            Bot_Market_Info = response.text
+            Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+            Bot_Market_Info = list(Bot_Market_Info)
+            Bot_Market_info_Edit = json.loads(response.text)
+            Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+            Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+            Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+            crypto_check = str(Bot_Market_info_Edit_3['price']['currency'])
 
             if  currency_type == 'irt currency 🇮🇷' : 
                 if crypto_check == "None" : 
                     try :
-                        info1 = response.text
-                        info1 = str(info1).strip('[]')
-                        info1 = list(info1)
-                        info2 = json.loads(response.text)
-                        info3 = info2[0]
-                        info3 = str(info3)
-                        res = ast.literal_eval(info3)
-                        stock_price = str(res['price']['last']['value'])
+                        Bot_Market_Info = response.text
+                        Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+                        Bot_Market_Info = list(Bot_Market_Info)
+                        Bot_Market_info_Edit = json.loads(response.text)
+                        Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+                        Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+                        Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+                        crypto_price = str(Bot_Market_info_Edit_3['price']['last']['value'])
+                        change_irt = str(Bot_Market_info_Edit_3['price']['last']['today_change'])
                         response = requests.get(api_price_url+"USDTIRT")
                         response = response.json()
                         tmp =  response['trades'][0]['price'] 
@@ -230,10 +234,12 @@ def handle_text(message):
                         tmp = tmp.replace(",","")
                         tmp = tmp.strip("[ ]")
                         tmp = tmp.replace(" ",'')
-                        stock_price = float(stock_price)
+                        crypto_price = float(crypto_price)
                         tmp = float(tmp)
-                        stock_price_all = tmp * stock_price
-                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(res['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(res['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(res['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + str(stock_price_all) +"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(res['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(res['price']['last']['today_change_percent'])+'%')
+                        change_irt = float(change_irt)
+                        change_irt_fi = change_irt * tmp
+                        crypto_price_all = tmp * crypto_price
+                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" PRICE 🌋 : " + str(crypto_price_all) +" 🇮🇷"+"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ : " + str(change_irt_fi)+" 🇮🇷"+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')
                     except : 
                        bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
                 else: 
@@ -242,15 +248,15 @@ def handle_text(message):
                 if crypto_check == "None" : 
                     try:
                         
-                        info1 = response.text
-                        info1 = str(info1).strip('[]')
-                        info1 = list(info1)
-                        info2 = json.loads(response.text)
-                        info3 = info2[0]
-                        info3 = str(info3)
-                        res = ast.literal_eval(info3)
-                        stock_price = str(res['price']['last']['value'])
-                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(res['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(res['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(res['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + stock_price +"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(res['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(res['price']['last']['today_change_percent'])+'%')      
+                        Bot_Market_Info = response.text
+                        Bot_Market_Info = str(Bot_Market_Info).strip('[]')
+                        Bot_Market_Info = list(Bot_Market_Info)
+                        Bot_Market_info_Edit = json.loads(response.text)
+                        Bot_Market_info_Edit_2 = Bot_Market_info_Edit[0]
+                        Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
+                        Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
+                        crypto_price = str(Bot_Market_info_Edit_3['price']['last']['value'])
+                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+"  PRICE 🌋 :💲" + crypto_price +"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ :💲" + str(Bot_Market_info_Edit_3['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')      
                     except : 
                         bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
                 else :
@@ -274,7 +280,7 @@ def handle_text(message):
             tmp = tmp.replace(",","")
             tmp = tmp.strip("[ ]")
             tmp = tmp.replace(" ",'')
-            bot.reply_to(message,"USDT/IRT PRICE : "+tmp)
+            bot.reply_to(message,"🇮🇷 "+"USDT/IRT PRICE : "+tmp+" 🇮🇷")
         except : 
             bot.reply_to(message,'Server Error...')
 

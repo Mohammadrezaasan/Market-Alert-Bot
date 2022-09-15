@@ -19,13 +19,13 @@ Addresses = {
     'donation usdc(matic)\n💸' :"🔴 Address :\n0x7B075A1c07e05d3542c13e56A61b63Da91125171"
     }
 photos ={
-    'donation btc(btc)💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\btc.jpg",'rb'),
-    'donation ETH(ETH)💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\eth.jpg",'rb'),
-    'donation bnb(bnb)💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\bnb.jpg",'rb'),
-    'donation xrp(xrp)\n💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\xrp.jpg",'rb'),
-    'donation busd(eth)\n💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\busd.jpg",'rb'),
-    'donation usdt(eth)\n💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\usdt-eth network.jpg",'rb'),
-    'donation usdc(matic)\n💸' : open("C:\\Users\\****\\OneDrive\\Desktop\\usdc.jpg",'rb')
+    'donation btc(btc)💸' : open("donation_photos\\btc.jpg",'rb'),
+    'donation ETH(ETH)💸' : open("donation_photos\\eth.jpg",'rb'),
+    'donation bnb(bnb)💸' : open("donation_photos\\bnb.jpg",'rb'),
+    'donation xrp(xrp)\n💸' : open("donation_photos\\xrp.jpg",'rb'),
+    'donation busd(eth)\n💸' : open("donation_photos\\busd.jpg",'rb'),
+    'donation usdt(eth)\n💸' : open("donation_photos\\usdt-eth network.jpg",'rb'),
+    'donation usdc(matic)\n💸' : open("donation_photos\\usdc.jpg",'rb')
     }
 '------------------------------------------------------------------------------------------------------------------------------------'
 Bot_Info = {

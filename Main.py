@@ -34,7 +34,7 @@ def handle_text(message):
         bot.reply_to(message,Bot_Info[message.text])
     
     elif   message.text == '🗝 click here to find out what each keyword does 🗝'  : 
-        bot.send_photo(message.chat.id,open("C:info_photos\\m1.PNG",'rb'),caption="")
+        bot.send_photo(message.chat.id,open("C:info\\m1.PNG",'rb'),caption="")
 
     
     elif message.text == '📓 click here to open the list of keywords for you 📓' : 
@@ -188,7 +188,7 @@ def handle_text(message):
                     Bot_Market_info_Edit_2 = str(Bot_Market_info_Edit_2)
                     Bot_Market_info_Edit_3 = ast.literal_eval(Bot_Market_info_Edit_2)
                     crypto_price = str(Bot_Market_info_Edit_3['price']['last']['value'])
-                    bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🏢 Full name of the company 🏢 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + crypto_price +"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" + str(Bot_Market_info_Edit_3['price']['last']['today_change'])+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')
+                    bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🏢 Full name of the company 🏢 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" STOCK PRICE 🌋 :💲" + crypto_price +"\n⏳ "+stock_name.upper()+" STOCK TODAY CHANGE ⏳ :💲" +("%.2f" % round((Bot_Market_info_Edit_3['price']['last']['today_change']),2)) +'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+("%.2f" % round((Bot_Market_info_Edit_3['price']['last']['today_change_percent']),2))+'%')
         except :
             bot.reply_to(message,'🔴🔴 Make sure your sentence is spelled correctly 🔴🔴')
         
@@ -248,7 +248,7 @@ def handle_text(message):
              
                         
 
-                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" PRICE 🌋 : " +str(f'{(crypto_price_all):,}') +' TOMAN'+" 🇮🇷"+"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ : " + str(f'{(change_irt_fi):,}')+" TOMAN"+" 🇮🇷"+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(today_change_percent)+'%\n')
+                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+" PRICE 🌋 : " +str(f'{(crypto_price_all):,}') +' TOMAN'+" 🇮🇷"+"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ : " + str(f'{(change_irt_fi):,}')+" TOMAN"+" 🇮🇷"+'\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+("%.2f" % round((today_change_percent),2))+'%\n')
                     except : 
                        bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
                 else: 
@@ -267,7 +267,7 @@ def handle_text(message):
                         crypto_price = (Bot_Market_info_Edit_3['price']['last']['value'])
                         change_today = (Bot_Market_info_Edit_3['price']['last']['today_change'])
                         today_change_percent = Bot_Market_info_Edit_3['price']['last']['today_change_percent']
-                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+"  PRICE 🌋 : " + str(f'{(int(crypto_price)):,}') +' 💲'+"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ : " + str(f'{(int(change_today)):,}')+' 💲'+ '\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ str(Bot_Market_info_Edit_3['price']['last']['today_change_percent'])+'%')      
+                        bot.reply_to(message,'🌍 The country where the company is located 🌍 : '+str(Bot_Market_info_Edit_3['info']['country_code'])+'\n🪙 Full name of the currency 🪙 : '+str(Bot_Market_info_Edit_3['info']['title'])+'\n🪙 CURRENCY 🪙 : '+str(Bot_Market_info_Edit_3['price']['currency'])+'\n🌋 '+stock_name.upper()+"  PRICE 🌋 : " + str(f'{(int(crypto_price)):,}') +' 💲'+"\n⏳ "+stock_name.upper()+"  TODAY CHANGE ⏳ : " + str(f'{(int(change_today)):,}')+' 💲'+ '\n⏳ '+stock_name.upper()+' TODAY CHANGE PERCENT ⏳ : '+ ("%.2f" % round((Bot_Market_info_Edit_3['price']['last']['today_change_percent']),2))+'%')      
                     except : 
                         bot.reply_to(message,"🔴🔴 Make sure the name of the currency you entered is correct or it is in the cryptocurrency list 🔴🔴")
                 else :
